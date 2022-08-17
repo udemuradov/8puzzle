@@ -1,6 +1,6 @@
 ## 8Puzzle Slide in Flutter
 
-> Launch Web App: https://udemuradov.github.io/8puzzle/
+> Launch Web App: https://udemuradov.github.io/8puzzle/#/
 
 ## How to run?
 
