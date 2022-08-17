@@ -11,6 +11,7 @@ class PuzzleContainerWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
     return Column(
       children: [
         Row(
@@ -32,20 +33,24 @@ class PuzzleContainerWidget extends StatelessWidget {
         const SizedBox(
           height: 40,
         ),
-        GridView.builder(
-          shrinkWrap: true,
-          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 3,
-            mainAxisSpacing: 5,
-            crossAxisSpacing: 5,
+        SizedBox(
+          width: size.width < 600 ? null : size.width * .4,
+          child: GridView.builder(
+            shrinkWrap: true,
+            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: 3,
+              mainAxisSpacing: 7,
+              crossAxisSpacing: 7,
+              // childAspectRatio: 3
+            ),
+            itemCount: state.puzzleModel?.length ?? 0,
+            itemBuilder: (context, index) {
+              // print(state.puzzleImages![index]);
+              return state.puzzleModel![index].value != 0
+                  ? PuzzleItemWidget(index: index, state: state)
+                  : const SizedBox.shrink();
+            },
           ),
-          itemCount: state.puzzleModel?.length ?? 0,
-          itemBuilder: (context, index) {
-            // print(state.puzzleImages![index]);
-            return state.puzzleModel![index].value != 0
-                ? PuzzleItemWidget(index: index, state: state)
-                : const SizedBox.shrink();
-          },
         ),
         const SizedBox(
           height: 30,

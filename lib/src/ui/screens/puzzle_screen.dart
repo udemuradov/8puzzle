@@ -10,7 +10,6 @@ class PuzzleScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final bloc = BlocProvider.of<PuzzleBloc>(context);
-    final size = MediaQuery.of(context).size;
     return Scaffold(
       backgroundColor: Colors.teal,
       appBar: AppBar(
@@ -21,36 +20,33 @@ class PuzzleScreen extends StatelessWidget {
         centerTitle: true,
       ),
       body: Center(
-        child: SizedBox(
-          height: size.height * 0.7,
-          child: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: BlocBuilder<PuzzleBloc, PuzzleState>(
-              bloc: bloc..add(PuzzleStartEvent()),
-              builder: (context, state) {
-                if (state is PuzzleInitial) {
-                  return const Center(child: CircularProgressIndicator());
-                }
-                if (state is PuzzleLoad) {
-                  return PuzzleContainerWidget(state: state);
-                }
-                if (state is PuzzleCheckFinish) {
-                  return PuzzleWinnerScreen(
-                    state: state,
-                  );
-                }
-                if (state is PuzzleError) {
-                  return Center(
-                      child: ElevatedButton(
-                          onPressed: () {
-                            BlocProvider.of<PuzzleBloc>(context)
-                                .add(PuzzleStartEvent());
-                          },
-                          child: const Text('restart')));
-                }
-                return const SizedBox.shrink();
-              },
-            ),
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: BlocBuilder<PuzzleBloc, PuzzleState>(
+            bloc: bloc..add(PuzzleStartEvent()),
+            builder: (context, state) {
+              if (state is PuzzleInitial) {
+                return const Center(child: CircularProgressIndicator());
+              }
+              if (state is PuzzleLoad) {
+                return PuzzleContainerWidget(state: state);
+              }
+              if (state is PuzzleCheckFinish) {
+                return PuzzleWinnerScreen(
+                  state: state,
+                );
+              }
+              if (state is PuzzleError) {
+                return Center(
+                    child: ElevatedButton(
+                        onPressed: () {
+                          BlocProvider.of<PuzzleBloc>(context)
+                              .add(PuzzleStartEvent());
+                        },
+                        child: const Text('restart')));
+              }
+              return const SizedBox.shrink();
+            },
           ),
         ),
       ),
